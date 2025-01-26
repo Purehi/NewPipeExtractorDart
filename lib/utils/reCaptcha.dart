@@ -45,7 +45,7 @@ class _ReCaptchaPageState extends State<ReCaptchaPage> {
           title: ListTile(
             title: Text("reCaptcha", style: TextStyle(color: Colors.white)),
             subtitle: Text("Solve the reCaptcha and confirm",
-                style: TextStyle(color: Colors.white.withOpacity(0.6))),
+                style: TextStyle(color: Colors.white.withValues(alpha: 0.6))),
           ),
           backgroundColor: Colors.redAccent,
           actions: [
@@ -64,7 +64,7 @@ class _ReCaptchaPageState extends State<ReCaptchaPage> {
                   final int abuseEnd = currentUrl.indexOf("+path");
                   try {
                     String? abuseCookie =
-                        currentUrl.substring(abuseStart + 12, abuseEnd);
+                    currentUrl.substring(abuseStart + 12, abuseEnd);
                     abuseCookie = await (NewPipeExtractorDart.extractorChannel
                         .invokeMethod('decodeCookie', {"cookie": abuseCookie}) as FutureOr<String>);
                     handleCookies(abuseCookie);
@@ -79,7 +79,7 @@ class _ReCaptchaPageState extends State<ReCaptchaPage> {
         ),
         body: InAppWebView(
           initialUrlRequest: URLRequest(
-              url: Uri.parse(url), headers: ExtractorHttpClient.defaultHeaders),
+              url: WebUri.uri(UriData.fromString(url).uri), headers: ExtractorHttpClient.defaultHeaders),
           onLoadStop: (cont, _) {
             controller = cont;
           },
